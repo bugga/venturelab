@@ -1,0 +1,60 @@
+/**
+ * @author Shriyamvar Bugga
+ */
+
+function getAvailableDataSources() 
+{
+	var url = "http://api.worldbank.org/source?per_page=10";
+	var httpRequest;
+	alert( url );
+	makeRequest( url );
+}
+
+function makeRequest(url) 
+{
+	if (window.XMLHttpRequest) 
+ 	{ // Mozilla, Safari, ...
+		httpRequest = new XMLHttpRequest();
+    } 
+    else if (window.ActiveXObject) 
+    { // IE
+		try 
+		{
+        	httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } 
+        catch (e) 
+        {
+        	try 
+        	{
+        		httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        	} 
+        	catch (e) {}
+        }
+    }
+ 
+    if (!httpRequest) 
+    {
+    	alert('Giving up :( Cannot create an XMLHTTP instance');
+    	return false;
+    }
+    
+    httpRequest.onreadystatechange = paintContents;
+    httpRequest.open('GET', url, true);
+    httpRequest.send();  
+    xmlDoc =
+}
+ 
+function paintContents() 
+{
+	if (httpRequest.readyState === 4) 
+    {
+    	if (httpRequest.status === 200) 
+    	{
+    		alert("Response Text length: " + httpRequest.responseText.length);
+    	} 
+    	else 
+    	{
+        	alert('There was a problem with the request. httpRequest.status: ' + httpRequest.status);
+        }
+	}
+}

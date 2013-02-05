@@ -1,0 +1,8 @@
+/**
+ * @author Shriyamvar Bugga
+ */
+
+function hideParas()
+{
+    $("p").hide();
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+<h2 onclick="justHide()">This is a heading</h2>
+<p onclick="justHide()">This is a paragraph.</p>
+<p onclick="justHide()">This is another paragraph.</p>
+<button onclick="justHide()">Click me</button>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+<script src="my_jquery_functions.js"></script>
+<script>
+$(document).ready(function(){
+  $("p").click(function(){
+    $(this).hide();
+  });
+});
+</script>
+</body>
+</html>

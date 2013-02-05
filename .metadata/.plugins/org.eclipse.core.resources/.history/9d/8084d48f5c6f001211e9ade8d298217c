@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>My jQuery Ajax test</title>
+        <style type="text/css">
+            #mybox {
+                width: 300px;
+                height: 250px;
+                border: 1px solid #999;
+            }
+        </style>
+        <script src="jquery-1.8.2.min.js"></script>
+        <script>                         
+                function myCall() {
+                    var request = $.ajax({
+                        url: "//api.worldbank.org/source?per_page=50",
+                        type: "GET",
+                        contentType: "text/xml; charset=utf-8",           
+                        dataType: "xml"
+                    });
+ 
+ 					request.ajaxComplete(function(){
+ 						
+ 					});
+                    request.done(function(msg) {
+                    	alert(msg);
+                        $("#mybox").html(msg);         
+                    });
+ 
+                    request.fail(function(jqXHR, textStatus) {
+                        alert( "Request failed: " + textStatus );
+                        alert("jqXHR.responseText: " + jqxhr.responseXML );
+                    });
+                }
+             
+        </script>
+    </head>
+    <body>
+        The following div will be updated after the call:<br />
+        <div id="mybox">             
+        </div>
+        <input type="button" value="Update" onclick="myCall()" />
+    </body>
+</html>

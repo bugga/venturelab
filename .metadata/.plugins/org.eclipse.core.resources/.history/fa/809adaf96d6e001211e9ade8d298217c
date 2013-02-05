@@ -1,0 +1,10 @@
+/**
+ * @author Shriyamvar Bugga
+ */
+
+function hideParas()
+{
+	$("button").click(function(){
+    $("p").hide();
+  });
+}

@@ -1,0 +1,19 @@
+/**
+ * @author Shriyamvar Bugga
+ */
+
+function hideParas()
+{
+    $("this").hide();
+}
+
+function hideButtons()
+{
+	$("this").hide();
+}
+
+function jQueryGET
+(
+	jQuery.get("http://api.worldbank.org/source?per_page=20");
+	
+)

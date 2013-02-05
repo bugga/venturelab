@@ -1,0 +1,7 @@
+
+function getAvailableDataSources()
+{
+	$("button").click(function(){
+    $("p").hide();
+  });
+}

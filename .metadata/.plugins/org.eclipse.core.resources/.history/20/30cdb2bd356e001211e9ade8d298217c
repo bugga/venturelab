@@ -1,0 +1,109 @@
+/**
+ * @author Shriyamvar Bugga
+ */
+
+function getAvailableDataSources() 
+{
+	var httpRequest;
+	var url = "http://api.worldbank.org/source?per_page=10";
+	alert( url );
+	makeRequest( url );
+}
+
+function makeRequest(url) 
+{
+	alert('make request.... ');
+	if (window.XMLHttpRequest) 
+ 	{ // Mozilla, Safari, ...
+		httpRequest = new XMLHttpRequest();
+    } 
+    else if (window.ActiveXObject) 
+    { // IE
+		try 
+		{
+        	httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } 
+        catch (e) 
+        {
+        	try 
+        	{
+        		httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        	} 
+        	catch (e) {}
+        }
+    }
+ 
+    if (!httpRequest) 
+    {
+    	alert('Giving up :( Cannot create an XMLHTTP instance');
+    	return false;
+    }
+
+	alert('make request.... create and send request... ');
+	
+    httpRequest.onreadystatechange = checkResponseXML;
+    httpRequest.open('GET', url);
+    httpRequest.send();  
+}
+
+function checkResponseXML() 
+{
+	if (httpRequest.readyState === 4) 
+    {
+    	ParseHTTPResponse(httpRequest);
+	}
+}
+
+function ParseHTTPResponse (httpRequest) {
+    var xmlDoc = httpRequest.responseXML;
+    document.write(httpRequest.responseText);
+            // if responseXML is not valid, try to create the XML document from the responseText property
+    if (!xmlDoc || !xmlDoc.documentElement) {
+        if (window.DOMParser) {
+            var parser = new DOMParser();
+            try {
+                xmlDoc = parser.parseFromString (httpRequest.responseText, "text/xml");
+            } catch (e) {
+                alert ("XML parsing error");
+                return null;
+            };
+        }
+        else {
+        	
+        	alert('progress... A');
+        	
+            xmlDoc = CreateMSXMLDocumentObject ();
+            if (!xmlDoc) {
+                return null;
+            }
+            xmlDoc.loadXML (httpRequest.responseText);
+			
+			alert('progress... B');
+		
+        }
+        
+    }
+                // if there was an error while parsing the XML document
+    var errorMsg = null;
+    if (xmlDoc.parseError && xmlDoc.parseError.errorCode != 0) {
+        errorMsg = "XML Parsing Error: " + xmlDoc.parseError.reason
+                  + " at line " + xmlDoc.parseError.line
+                  + " at position " + xmlDoc.parseError.linepos;
+    }
+    else {
+        if (xmlDoc.documentElement) {
+            if (xmlDoc.documentElement.nodeName == "parsererror") {
+                errorMsg = xmlDoc.documentElement.childNodes[0].nodeValue;
+            }
+        }
+    }
+    if (errorMsg) {
+        alert (errorMsg);
+        return null;
+    }
+    
+    alert('progress... C ' + xmlDoc.documentElement.childNodes[0].childNodes[0].nodeValue);
+    
+            // ok, the XML document is valid
+    return xmlDoc;
+}
